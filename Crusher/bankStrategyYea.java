@@ -25,11 +25,12 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 			if (Cons.bankArea.contains(Players.getLocal().getLocation())) {
 				if (Bank.isOpen()) {
 					if (Inventory.getItem(Cons.DUST_ID) != null) {
-						
+						Cons.status = "Deposit";
 						Bank.depositInventory();
 						Time.sleep(1000, 1500);
 					} else {
 						if (Bank.getItem(Cons.SCALE_ID) != null) {
+							Cons.status = "Withdraw";
 							Bank.withdraw(Cons.SCALE_ID, 0);
 							Time.sleep(600, 800);
 							Bank.close();
@@ -37,12 +38,15 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 					}
 				} else if (Booth != null) {
 					if (Booth.isOnScreen()) {
+						Cons.status = "Open bank";
 						Booth.interact("Bank");
 						Time.sleep(1000, 1500);
 					} else {
+						Cons.status = "Turning camera";
 						Camera.turnTo(Booth);
 					}
 					while (Players.getLocal().isMoving()) {
+						Cons.status = "Player is Moving";
 						Time.sleep(200, 400);
 					}
 				}
@@ -57,7 +61,7 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 
 	@Override
 	public boolean validate() {
-		return Cons.bankNow == true;
+		return Cons.bankNow == true && !Cons.guiWait;
 		
 	}
 
