@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-
 import javax.imageio.ImageIO;
-
-import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.util.Timer;
 import org.powerbot.game.api.wrappers.Area;
 import org.powerbot.game.api.wrappers.Tile;
@@ -21,13 +18,24 @@ public class Cons {
 	public static int Moneymade = Cons.scaleGrinded
 			* (Cons.dustPrice - Cons.scalePrice);
 
+	
+	
+	public static int scale_price;
+	public static int scale_dust_price;
+	public static int bar_price;
+	public static int bar_dust_price;
+	//public static int horn_price;
+	//public static int horn_dust_price;
+
+	
+	
 	public static int SCALE_ID;
 	public static int DUST_ID;
 	public static int BOOTH_ID = 782;
-	public static boolean guiWait = true;
 	public static boolean chocolate;
 	public static boolean bankNow;
 	public static boolean grindNow = true;
+	public static boolean stopatend;
 
 	public static Area bankArea = new Area(new Tile[] {
 			new Tile(3177, 3447, 0), new Tile(3194, 3447, 0),
@@ -40,7 +48,7 @@ public class Cons {
 			return null;
 		}
 	}
-
+	public static long startTime;
 	public static int dustPrice;
 	public static int scalePrice;
 	public static int scaleGrinded = 0;
@@ -51,7 +59,7 @@ public class Cons {
 	public static Color color3 = new Color(7, 0, 123);
 	public static Color color4 = new Color(255, 0, 0);
 	public static Color color5 = new Color(7, 0, 145);
-	public static String status;
+	public static String status = "Loading...";
 
 	public static BasicStroke stroke1 = new BasicStroke(1);
 
@@ -59,29 +67,30 @@ public class Cons {
 
 	public static Image img1 = getImage("http://images4.wikia.nocookie.net/__cb20111118050605/runescape/images/thumb/f/fa/Blue_dragon_scale_detail.png/50px-Blue_dragon_scale_detail.png");
 	public static Image img2 = getImage("http://images3.wikia.nocookie.net/__cb20111120062735/runescape/images/thumb/a/ab/Dragon_scale_dust_detail.png/100px-Dragon_scale_dust_detail.png");
+	
+	// Thanks Coma ;)
+	public static int getPrice(int id) {
+        try {
+            String price;
+            URL url = new URL("http://open.tip.it/json/ge_single_item?item=" + id);
+            URLConnection con = url.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                if (line.contains("mark_price")) {
+                    price = line.substring(line.indexOf("mark_price") + 13, line.indexOf(",\"daily_gp") - 1);
+                    price = price.replace(",", "");
+                    return Integer.parseInt(price);
 
-	public static int getPriceOfItem(int id) throws IOException {
-		String price;
-		URL url = new URL(
-				"http://services.runescape.com/m=itemdb_rs/viewitem.ws?obj="
-						+ id);
-		URLConnection con = url.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				con.getInputStream()));
-		String line;
-		while ((line = in.readLine()) != null) {
-			if (line.contains("<td>")) {
-				price = line.substring(line.indexOf(">") + 1,
-						line.indexOf("/") - 1);
-				price = price.replace(",", "");
-				try {
-					return Integer.parseInt(price);
-				} catch (NumberFormatException e) {
-					return 0;
-				}
-			}
-		}
-		return -1;
-	}
+                }
+            }
+        } catch (Exception e) {
+            return -1;
+        }
+
+        return -1;
+    }
+	
+	
 
 }

@@ -2,8 +2,6 @@ package Crusher;
 
 import org.powerbot.concurrent.strategy.Condition;
 import org.powerbot.concurrent.strategy.Strategy;
-import org.powerbot.game.api.ActiveScript;
-import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
@@ -61,7 +59,7 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 
 	@Override
 	public boolean validate() {
-		return Cons.bankNow == true && !Cons.guiWait;
+		return Cons.bankNow == true;
 		
 	}
 
