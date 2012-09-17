@@ -14,7 +14,7 @@ import org.powerbot.game.bot.event.listener.PaintListener;
 
 import Crusher.Container.Cons;
 
-@Manifest(authors = { "Aww" }, name = "Crusher AIO beta", description = "Crusher scales/choco bars for money", version = 0.2)
+@Manifest(authors = { "Aww" }, name = "Crusher AIO beta", description = "Crusher scales/choco bars for money", version = 0.3)
 public class Crusher extends ActiveScript implements PaintListener,
 		MessageListener {
 	@Override
