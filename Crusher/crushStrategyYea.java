@@ -9,7 +9,7 @@ import org.powerbot.game.api.util.Time;
 import Crusher.Container.*;
 
 public class crushStrategyYea extends Strategy implements Runnable, Condition {
-
+ 
 	@Override
 	public void run() {
 

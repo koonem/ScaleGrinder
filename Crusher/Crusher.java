@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import org.powerbot.game.api.ActiveScript;
 import org.powerbot.game.api.Manifest;
+import org.powerbot.game.api.methods.Tabs;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.util.Timer;
@@ -13,8 +14,8 @@ import org.powerbot.game.bot.event.listener.MessageListener;
 import org.powerbot.game.bot.event.listener.PaintListener;
 
 import Crusher.Container.Cons;
-
-@Manifest(authors = { "Aww" }, name = "Crusher AIO beta", description = "Crusher scales/choco bars for money", version = 0.3)
+ 
+@Manifest(authors = { "Aww" }, name = "Crusher AIO ", description = "All In One crusher. Crushes everything crushable ", website = "http://www.powerbot.org/community/topic/771509-sdnp2pcrusher150k-300kh/", version = 1.0)
 public class Crusher extends ActiveScript implements PaintListener,
 		MessageListener {
 	@Override
@@ -23,10 +24,14 @@ public class Crusher extends ActiveScript implements PaintListener,
 		Cons.scale_dust_price = Cons.getPrice(241);
 		Cons.bar_price = Cons.getPrice(1973);
 		Cons.bar_dust_price = Cons.getPrice(1975);
-		Cons.startTime = System.currentTimeMillis();
-		
-		gui.setVisible(true);
+		Cons.horn_price = Cons.getPrice(9735);
+		Cons.horn_dust_price = Cons.getPrice(9736);
+		Cons.uni_horn_price = Cons.getPrice(237);
+		Cons.uni_horn_dust_price = Cons.getPrice(235);
 		Cons.runTime = new Timer(0);
+		Cons.startTime = System.currentTimeMillis();
+		gui.setVisible(true);
+		
 		if (Inventory.getItem(Cons.SCALE_ID) == null) {
 
 			Cons.bankNow = true;
@@ -38,28 +43,42 @@ public class Crusher extends ActiveScript implements PaintListener,
 	
 
 	public void onRepaint(Graphics g1) {
+		if(Tabs.getCurrent().equals(Tabs.INVENTORY)){
 		Graphics2D g = (Graphics2D) g1;
+		
 		g.setColor(Cons.color1);
-		g.fillRect(5, 394, 508, 132);
-		g.setColor(Cons.color2);
-		g.setStroke(Cons.stroke1);
-		g.drawRect(5, 394, 508, 132);
-		g.setFont(Cons.font1);
+		g.fillRoundRect(355, 55, 163, 333,32,32);
+		
+		//bold black
+		g.setFont(Cons.font_bold);
 		g.setColor(Cons.color3);
-		g.drawString("Scales crushed : " + Cons.scaleGrinded, 14, 445);
-		g.drawString("Run Time: " + Time.format(Cons.runTime.getElapsed()), 57,
-				422);
-		g.setColor(Cons.color4);
-		g.drawString("Status : " + Cons.status, 326, 512);
-		g.setColor(Cons.color5);
-		g.drawString("Money made : " + Cons.scaleGrinded
-				* (Cons.dustPrice - Cons.scalePrice), 27, 472);
-		g.drawString("Money Hour : " + ((Cons.scaleGrinded
-				* (Cons.dustPrice - Cons.scalePrice) * 3600000l) / (System
-				.currentTimeMillis() - Cons.startTime)), 27, 499);
-		g.drawImage(Cons.img1, 320, 369, null);
-		g.drawImage(Cons.img2, 408, 376, null);
+		g.drawString("Crushed : ", 366, 145);
+		g.drawString("Money made : " , 366, 195);
+		g.drawString("Run Time: " + Time.format(Cons.runTime.getElapsed()), 366,
+				115);
+		g.drawString("Item: "+ Cons.cHoosed, 366, 245);
+		
+		//kaldus black
+		//crushed/H
+		g.setFont(Cons.font_kaldus);
+		g.drawString(Cons.scaleGrinded + "/ "+ (Cons.scaleGrinded*3600000l)/(System
+				.currentTimeMillis() - Cons.startTime)+ "p/h", 388, 165);
+		//gp/H
+		g.drawString(Cons.scaleGrinded
+				* (Cons.dustPrice - Cons.scalePrice)+ "gp / "+ ((Cons.scaleGrinded
+						* (Cons.dustPrice - Cons.scalePrice) * 3600000l) / (System
+								.currentTimeMillis() - Cons.startTime))+ "gp/h", 388, 215);
 
+		//bold red
+		g.setFont(Cons.font_bold);
+		g.setColor(Cons.color4);
+		g.drawString("Status: " + Cons.status, 366, 275);
+		
+		//img
+		g.drawImage(Cons.img1, 360, 55, null);
+
+
+		}
 	}
 
 	@Override
@@ -74,18 +93,18 @@ public class Crusher extends ActiveScript implements PaintListener,
 	class grinderGUI extends JFrame {
 		public grinderGUI() {
 			initComponents();
-			setTitle("Aww's Crusher");
+			setTitle("Aww's AIO Crusher");
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 
 		private void startButtonActionPerformed(ActionEvent e) {
 			String chosen = Whattocrush.getSelectedItem().toString();
-			if (chosen.equals("Blue dragon scales")) {
+			if (chosen.equals("Blue dragon scale")) {
 				Cons.SCALE_ID = 243;
 				Cons.DUST_ID = 241;
 				Cons.dustPrice = Cons.scale_dust_price;
 				Cons.scalePrice = Cons.scale_price;
-				Cons.chocolate = false;
+				Cons.cHoosed = "Blue dragon scale";
 			}
 			if (chosen.equals("Chocolate bar")) {
 				Cons.SCALE_ID = 1973;
@@ -93,18 +112,34 @@ public class Crusher extends ActiveScript implements PaintListener,
 				Cons.dustPrice = Cons.bar_dust_price;
 				Cons.scalePrice = Cons.bar_price;
 				Cons.chocolate = true;
+				Cons.cHoosed = "Chocolate bars";
+			}
+			if (chosen.equals("Desert goat horn")) {
+				Cons.SCALE_ID = 9735;
+				Cons.DUST_ID = 9736;
+				Cons.dustPrice = Cons.horn_dust_price;
+				Cons.scalePrice = Cons.horn_price;
+				Cons.cHoosed = "Desert goat horn";
+			}
+			if (chosen.equals("Unicorn horn")) {
+				Cons.SCALE_ID = 237;
+				Cons.DUST_ID = 235;
+				Cons.dustPrice = Cons.uni_horn_dust_price;
+				Cons.scalePrice = Cons.uni_horn_price;
+				Cons.cHoosed = "Unicorn horn";
 			}
 			if(checkBox1.isSelected()){
 				Cons.stopatend = true;
-			}else
+			}else {
 				Cons.stopatend = false;
-			
+			}
 			gui.setVisible(false);
 			gui.dispose();
 			
 			provide(new crushStrategyYea());
 			provide(new bankStrategyYea());
 			provide(new stopAtEndStrategy());
+			
 
 		}
 
@@ -121,7 +156,7 @@ public class Crusher extends ActiveScript implements PaintListener,
 			Container contentPane = getContentPane();
 
 			// ---- label1 ----
-			label1.setText("Aww's Crusher");
+			label1.setText("Aww's AIO Crusher");
 			label1.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 
 			// ---- label2 ----
@@ -130,7 +165,7 @@ public class Crusher extends ActiveScript implements PaintListener,
 
 			// ---- Whattocrush ----
 			Whattocrush.setModel(new DefaultComboBoxModel(new String[] {
-					"Blue dragon scales", "Chocolate bar" }));
+					"Blue dragon scale", "Chocolate bar", "Desert goat horn", "Unicorn horn" }));
 
 			// ---- startButton ----
 			startButton.setText("Start");

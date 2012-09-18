@@ -11,7 +11,7 @@ import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 import Crusher.Container.Cons;
-
+  
 public class bankStrategyYea extends Strategy implements Runnable, Condition {
 
 	@Override

@@ -19,20 +19,22 @@ public class Cons {
 			* (Cons.dustPrice - Cons.scalePrice);
 
 	
-	
+	 
 	public static int scale_price;
 	public static int scale_dust_price;
 	public static int bar_price;
 	public static int bar_dust_price;
-	//public static int horn_price;
-	//public static int horn_dust_price;
+	public static int horn_price;
+	public static int horn_dust_price;
+	public static int uni_horn_price;
+	public static int uni_horn_dust_price;
 
 	
 	
 	public static int SCALE_ID;
 	public static int DUST_ID;
 	public static int BOOTH_ID = 782;
-	public static boolean chocolate;
+	public static boolean chocolate = false;
 	public static boolean bankNow;
 	public static boolean grindNow = true;
 	public static boolean stopatend;
@@ -54,19 +56,21 @@ public class Cons {
 	public static int scaleGrinded = 0;
 	public static Timer runTime;
 	public static long timeRun;
-	public static Color color1 = new Color(255, 255, 255);
-	public static Color color2 = new Color(100, 87, 3);
-	public static Color color3 = new Color(7, 0, 123);
-	public static Color color4 = new Color(255, 0, 0);
-	public static Color color5 = new Color(7, 0, 145);
-	public static String status = "Loading...";
+	public static Color color1 = new Color(0, 67, 239, 210);
+	public static Color color2 = new Color(100, 87, 3, 240);
+	public static Color color3 = new Color(0, 0, 0, 240);
+	public static Color color4 = new Color(255, 0, 0, 240);
+	public static Color color5 = new Color(0, 0, 0, 240);
+	public static String status = "Waiting GUI";
+	public static String cHoosed = "Waiting GUI";
 
 	public static BasicStroke stroke1 = new BasicStroke(1);
 
-	public static Font font1 = new Font("Arial", 0, 13);
+	public static Font font_bold = new Font("Comic Sans MS", 1, 13);
+	public static Font font_kaldus = new Font("Comic Sans MS", 2, 13);
 
-	public static Image img1 = getImage("http://images4.wikia.nocookie.net/__cb20111118050605/runescape/images/thumb/f/fa/Blue_dragon_scale_detail.png/50px-Blue_dragon_scale_detail.png");
-	public static Image img2 = getImage("http://images3.wikia.nocookie.net/__cb20111120062735/runescape/images/thumb/a/ab/Dragon_scale_dust_detail.png/100px-Dragon_scale_dust_detail.png");
+	public static Image img1 = getImage("http://imageshack.us/a/img684/6568/67922958.png");
+	
 	
 	// Thanks Coma ;)
 	public static int getPrice(int id) {

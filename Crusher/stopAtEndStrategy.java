@@ -17,7 +17,7 @@ public class stopAtEndStrategy extends Strategy implements Runnable {
 			Game.logout(true);
 			Context.get().getActiveScript().stop(); 
 		}
-
+ 
 	}
 
 	@Override
