@@ -1,17 +1,19 @@
 package Crusher;
 
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.concurrent.strategy.Strategy;
+
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.Widgets;
 import org.powerbot.game.api.methods.tab.Inventory;
-import org.powerbot.game.api.util.Time;
+import org.powerbot.game.api.util.Random;
+
 
 import Crusher.Container.*;
 
-public class crushStrategyYea extends Strategy implements Runnable, Condition {
+public class crushStrategyYea extends Node {
  
 	@Override
-	public void run() {
+	public void execute() {
 
 		if (Inventory.getItem(Cons.SCALE_ID) != null) {
 			if (Cons.chocolate) {
@@ -19,13 +21,13 @@ public class crushStrategyYea extends Strategy implements Runnable, Condition {
 					Cons.status = "Getting bar";
 					Inventory.getItem(Cons.SCALE_ID).getWidgetChild()
 							.interact("Powder");
-					Time.sleep(600, 1000);
+					Task.sleep(600, 1000);
 				}
 				if (Widgets.get(905).getChild(14).validate()) {
 					Cons.grindNow = false;
 					Cons.status = "Continue";
 					Widgets.get(905).getChild(14).click(true);
-					Time.sleep(1000, 1500);
+					Task.sleep(1000, 1500);
 					Cons.status = "Grinding";
 
 				}
@@ -35,13 +37,13 @@ public class crushStrategyYea extends Strategy implements Runnable, Condition {
 					Cons.status = "Getting scale";
 					Inventory.getItem(Cons.SCALE_ID).getWidgetChild()
 							.interact("Grind");
-					Time.sleep(600, 1000);
+					Task.sleep(600, 1000);
 				}
 				if (Widgets.get(905).getChild(14).validate()) {
 					Cons.grindNow = false;
 					Cons.status = "Continue";
 					Widgets.get(905).getChild(14).click(true);
-					Time.sleep(1000, 1500);
+					Task.sleep(1000, 1500);
 					Cons.status = "Grinding";
 
 				}
@@ -58,7 +60,7 @@ public class crushStrategyYea extends Strategy implements Runnable, Condition {
 	
 
 	@Override
-	public boolean validate() {
+	public boolean activate() {
 		return !Cons.bankNow == true;
 
 	}

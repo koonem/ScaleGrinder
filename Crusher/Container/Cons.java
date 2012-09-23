@@ -38,6 +38,7 @@ public class Cons {
 	public static boolean bankNow;
 	public static boolean grindNow = true;
 	public static boolean stopatend;
+	public static boolean guiwait = true;
 
 	public static Area bankArea = new Area(new Tile[] {
 			new Tile(3177, 3447, 0), new Tile(3194, 3447, 0),

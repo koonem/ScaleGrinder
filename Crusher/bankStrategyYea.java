@@ -1,21 +1,22 @@
 package Crusher;
 
-import org.powerbot.concurrent.strategy.Condition;
-import org.powerbot.concurrent.strategy.Strategy;
+
+import org.powerbot.core.script.job.Task;
+import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.methods.widget.Camera;
-import org.powerbot.game.api.util.Time;
+import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 import Crusher.Container.Cons;
   
-public class bankStrategyYea extends Strategy implements Runnable, Condition {
+public class bankStrategyYea extends Node {
 
 	@Override
-	public void run() {
+	public void execute() {
 		
 		SceneObject Booth = SceneEntities.getNearest(Cons.BOOTH_ID);
 		if (Inventory.getItem(Cons.SCALE_ID) == null) {
@@ -25,12 +26,12 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 					if (Inventory.getItem(Cons.DUST_ID) != null) {
 						Cons.status = "Deposit";
 						Bank.depositInventory();
-						Time.sleep(1000, 1500);
+						Task.sleep(1000, 1500);
 					} else {
 						if (Bank.getItem(Cons.SCALE_ID) != null) {
 							Cons.status = "Withdraw";
 							Bank.withdraw(Cons.SCALE_ID, 0);
-							Time.sleep(600, 800);
+							Task.sleep(600, 800);
 							Bank.close();
 						}
 					}
@@ -38,14 +39,14 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 					if (Booth.isOnScreen()) {
 						Cons.status = "Open bank";
 						Booth.interact("Bank");
-						Time.sleep(1000, 1500);
+						Task.sleep(1000, 1500);
 					} else {
 						Cons.status = "Turning camera";
 						Camera.turnTo(Booth);
 					}
 					while (Players.getLocal().isMoving()) {
 						Cons.status = "Player is Moving";
-						Time.sleep(200, 400);
+						Task.sleep(200, 400);
 					}
 				}
 
@@ -58,7 +59,7 @@ public class bankStrategyYea extends Strategy implements Runnable, Condition {
 	
 
 	@Override
-	public boolean validate() {
+	public boolean activate() {
 		return Cons.bankNow == true;
 		
 	}
