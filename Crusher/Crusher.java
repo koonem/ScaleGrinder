@@ -20,33 +20,29 @@ import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.util.Time;
 import org.powerbot.game.api.util.Timer;
+import org.powerbot.game.bot.Context;
 
 import Crusher.Container.Cons;
 
-@Manifest(authors = { "Aww" }, name = "Crusher AIO ", description = "All In One crusher. Crushes everything crushable ", website = "http://www.powerbot.org/community/topic/771509-sdnp2pcrusher150k-300kh/", version = 1.0)
+@Manifest(authors = { "Aww" }, name = "Crusher AIO ", description = "All In One crusher. Crushes everything crushable ", website = "http://www.powerbot.org/community/topic/771509-sdnp2pcrusher150k-300kh/", version = 1.1)
 public class Crusher extends ActiveScript implements PaintListener,
 		MessageListener {
 
-	private Tree jobs = null;
+
 
 	@Override
 	public int loop() {
 		if (Cons.guiwait) {
 			Task.sleep(200, 400);
 		} else {
-
-			if (jobs == null) {
-				jobs = new Tree(new Node[] { new bankStrategyYea(),
-						new crushStrategyYea() });
+			if(bankStrategyYea.validate()){
+				bankStrategyYea.run();
 			}
-
-			final Node node = jobs.state();
-			if (node != null) {
-
-				jobs.set(node);
-				getContainer().submit(node);
-				node.join();
-				return 0;
+			if(bankStrategyYea.validate()){
+				bankStrategyYea.run();
+			}
+			if(stopAtEndStrategy.validate()){
+				stopAtEndStrategy.run();
 			}
 		}
 		return Random.nextInt(200, 300);
@@ -105,6 +101,7 @@ public class Crusher extends ActiveScript implements PaintListener,
 			g.drawString("Run Time: " + Time.format(Cons.runTime.getElapsed()),
 					366, 115);
 			g.drawString("Item: " + Cons.cHoosed, 366, 245);
+			g.drawString("Version: v"+Crusher.class.getAnnotation(Manifest.class).version()  ,425,375);
 
 			// kaldus black
 			// crushed/H
@@ -130,7 +127,7 @@ public class Crusher extends ActiveScript implements PaintListener,
 
 			// img
 			g.drawImage(Cons.img1, 360, 55, null);
-
+			
 		}
 	}
 	JFrame gui = new grinderGUI();
@@ -219,8 +216,8 @@ public class Crusher extends ActiveScript implements PaintListener,
 			checkBox1.setText("Log out/stop if out of items to crush");
 			checkBox1
 					.setToolTipText("Stops script if out of items to crush in bank.");
-			checkBox1.setSelected(false);
-			checkBox1.setEnabled(false);
+			checkBox1.setSelected(true);
+			checkBox1.setEnabled(true);
 
 			GroupLayout contentPaneLayout = new GroupLayout(contentPane);
 			contentPane.setLayout(contentPaneLayout);

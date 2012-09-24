@@ -30,7 +30,7 @@ public class Cons {
 	public static int uni_horn_dust_price;
 
 	
-	
+	public static double vers = 1.1;
 	public static int SCALE_ID;
 	public static int DUST_ID;
 	public static int BOOTH_ID = 782;
@@ -39,6 +39,7 @@ public class Cons {
 	public static boolean grindNow = true;
 	public static boolean stopatend;
 	public static boolean guiwait = true;
+	
 
 	public static Area bankArea = new Area(new Tile[] {
 			new Tile(3177, 3447, 0), new Tile(3194, 3447, 0),

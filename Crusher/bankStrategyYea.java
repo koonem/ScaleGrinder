@@ -2,21 +2,19 @@ package Crusher;
 
 
 import org.powerbot.core.script.job.Task;
-import org.powerbot.core.script.job.state.Node;
 import org.powerbot.game.api.methods.interactive.Players;
 import org.powerbot.game.api.methods.node.SceneEntities;
 import org.powerbot.game.api.methods.tab.Inventory;
 import org.powerbot.game.api.methods.widget.Bank;
 import org.powerbot.game.api.methods.widget.Camera;
-import org.powerbot.game.api.util.Random;
 import org.powerbot.game.api.wrappers.node.SceneObject;
 
 import Crusher.Container.Cons;
   
-public class bankStrategyYea extends Node {
+public class bankStrategyYea {
 
-	@Override
-	public void execute() {
+
+	public static void run() {
 		
 		SceneObject Booth = SceneEntities.getNearest(Cons.BOOTH_ID);
 		if (Inventory.getItem(Cons.SCALE_ID) == null) {
@@ -58,8 +56,8 @@ public class bankStrategyYea extends Node {
 
 	
 
-	@Override
-	public boolean activate() {
+
+	public static boolean validate() {
 		return Cons.bankNow == true;
 		
 	}

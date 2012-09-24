@@ -1,27 +1,28 @@
 package Crusher;
 
-import org.powerbot.core.script.job.state.Node;
+import org.powerbot.game.bot.Context;
+
+
 import org.powerbot.game.api.methods.Game;
 import org.powerbot.game.api.methods.widget.Bank;
-import org.powerbot.game.bot.Context;
 
 import Crusher.Container.Cons;
 
-public class stopAtEndStrategy extends Node {
+public class stopAtEndStrategy {
 
-	@Override
-	public void execute() {
+
+	public static void run() {
 
 		if (Bank.isOpen()) {
 			Bank.close();
 			Game.logout(true);
-			//Context.get().getActiveScript().stop(); 
+			Context.get().getScriptHandler().stop(); 
 		}
  
 	}
 
-	@Override
-	public boolean activate() {
+
+	public static boolean validate() {
 		return Bank.getItem(Cons.SCALE_ID) == null && Cons.stopatend;
 	}
 
